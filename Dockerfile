@@ -158,7 +158,10 @@ RUN cd $AMPERES_BUILD_DIR && cmake                              \
 RUN cd $AMPERES_BUILD_DIR && make -j 8 install
 
 # Move AMPERES test to INSTALL_DIR
-RUN cp -a $AMPERES_BUILD_DIR/src/test $AMP_INSTALL_DIR
+RUN cp -a $AMPERES_BUILD_DIR/src/test $AMPERES_INSTALL_DIR
+
+# Add AMPERES to LD_LIBRARY_PATH so the tests that have been moved can run
+ENV LD_LIBRARY_PATH="/opt/amperes/lib"
 
 # Remove unnecessary directory
-RUN rm -rf /scratch /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN rm -rf /scratch /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/AMP-Data
