@@ -236,6 +236,9 @@ COPY vibe $RELEASEDIR/vibe
 # BUILD VIBE
 RUN cd $VIBE_INSTALL_DIR/components && make install
 
+# Patch VIBE/OAS
+COPY patch.sh $RELEASEDIR
+RUN sh -xe $RELEASEDIR/patch.sh && rm $RELEASEDIR/patch.sh
 
 ############
 # CLEAN UP #
