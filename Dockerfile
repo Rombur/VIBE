@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
       libglu1-mesa-dev \
       libxmu-dev \
       subversion \
-      doxygen
+      doxygen \
+      python-numpy
 
 ARG TOPDIR="/scratch"
 ARG SRCDIR="${TOPDIR}/src"
@@ -190,6 +191,7 @@ RUN cd $SRCDIR && tar xf v3.2.1.tar.gz -C $BUILDDIR
 
 # Build CGNS
 RUN cd $CGNS_SRC_DIR && mkdir build && cd build && cmake \
+  -D CMAKE_BUILD_TYPE=Release \
  -D CGNS_BUILD_CGNSTOOLS=ON \
  -D CGNS_ENABLE_FORTRAN=ON \
  -D CGNS_ENABLE_HDF5=ON \
@@ -201,7 +203,7 @@ RUN cd $CGNS_SRC_DIR && mkdir build && cd build && cmake \
 
 RUN cd $CGNS_BUILD_DIR && make install 
 
-# Ass CGNS to LD_LIBRARY_PATH
+# Add CGNS to LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH="$CGNS_INSTALL_DIR/lib:$LD_LIBRARY_PATH"
 
 
@@ -217,7 +219,8 @@ svn checkout http://svn.code.sf.net/p/ipsframework/code/trunk OASFramework
 RUN cd $BUILDDIR && mkdir OAS && cd OAS && \
 ../../src/OASFramework/bin/ipsconfig.sh && ./config.sh && \
 cmake \
-  -D CMAKE_BUILD_TYPE="$OAS_INSTALL_DIR"\
+  -D CMAKE_BUILD_TYPE=Release \
+  -D CMAKE_INSTALL_PREFIX="$OAS_INSTALL_DIR"\
   $OAS_SRC_DIR
 
 RUN cd $OAS_BUILD_DIR && make install
@@ -239,4 +242,4 @@ RUN cd $VIBE_INSTALL_DIR/components && make install
 ############
 
 # Remove unnecessary directory
-RUN rm -rf /scratch /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/AMP-Data
+RUN rm -rf /scratch /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/AMP-Data /opt/._AMP-Data
