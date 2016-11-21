@@ -1,0 +1,9 @@
+[submodule "amperes"]
+	path = amperes
+	url = https://code.ornl.gov/ul2/amperes.git
+[submodule "amperes-data"]
+	path = amperes-data
+	url = https://code.ornl.gov/ul2/amperes-data.git
+[submodule "vibe"]
+	path = vibe
+	url = https://code.ornl.gov/ul2/vibe.git
