@@ -1,0 +1,12 @@
+version: '2'
+services:
+  vibe-ssh:
+    container_name: vibe-remote
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: vibe-remote
+    ports:
+      - "2222:22"
+    volumes:
+      - ./id_rsa_vibe.pub:/root/.ssh/authorized_keys:ro
