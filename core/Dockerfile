@@ -230,11 +230,17 @@ RUN cd $OAS_BUILD_DIR && make install
 # VIBE #
 ########
 
+# Set environment variables
+ENV CGNS_ROOT=$CGNS_INSTALL_DIR
+ENV HDF5_ROOT=$HDF5_INSTALL_DIR
+
 # Copy VIBE
 COPY vibe $RELEASEDIR/vibe
 
-# BUILD VIBE
-RUN cd $VIBE_INSTALL_DIR/components && make install
+# Build VIBE
+RUN cd $VIBE_INSTALL_DIR/components/config && \
+  ln -sf makeconfig.batsim makeconfig.local && \
+  cd $VIBE_INSTALL_DIR/components && make install
 
 # Patch VIBE/OAS
 COPY patch.sh $RELEASEDIR
