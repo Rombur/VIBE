@@ -13,4 +13,4 @@ $ docker run --rm -it dalg24/vibe /bin/bash
 ```
 
 To install Docker simply follow the instruction on the [Docker
-website](https://www.docker.com).
+website](https://docs.docker.com/engine/installation).
