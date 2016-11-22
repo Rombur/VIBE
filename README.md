@@ -1,7 +1,6 @@
-* The core folder contains the Dockerfile used to build an image of 
+* The `core` folder contains the Dockerfile used to build an image of 
   [VIBE](http://batterysim.org/vibe).
-* The remote folder contains a Dockerfile that adds ssh support to the previous
-  image.
+* The `remote` folder sets up VIBE to be launched remotely via SSH.
 
 It is however not necessary to build VIBE's image since it can be pulled using:
 ```bash
