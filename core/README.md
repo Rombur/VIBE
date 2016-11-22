@@ -1,7 +1,9 @@
 Build the image
 ===============
 To build the image, you will need to have access to the repository of VIBE,
-AMPERES, and AMPERES-DATA. If you do, simply type:
+AMPERES, and AMPERES-DATA.  If you do, you may run the two commands
+`git sumodule init` and `git submodule update` to fetch them.
+Then, simply type:
 ```bash
 $ docker build -t vibe .
 ```
