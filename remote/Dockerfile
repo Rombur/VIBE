@@ -6,6 +6,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /var/run/sshd
 
+COPY id_rsa_vibe.pub /root/.ssh/authorized_keys
+
 EXPOSE 22
 
 CMD ["/usr/sbin/sshd", "-D"]
