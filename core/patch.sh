@@ -19,9 +19,9 @@ cp amperes/test/testThermalBattery vibe-data/physics/Thermal/amperes/bin/amperes
 cp amperes/test/testNTGModel vibe-data/physics/CharTran/ntg/bin/ntg
 cp amperes/test/testElectricalBattery vibe-data/physics/Electrical/amperes/bin/amperes
 
-sed -i.old \
-  -e 's|/home/batsim/caebat/vibe|/opt/vibe|' \
-  -e 's|/home/batsim/caebat/data|/opt/vibe-data|' \
+sed -i 's|/home/batsim/caebat/install/opt/vibe|/opt/vibe|' \
+  /opt/vibe/examples/config/batsim.conf
+sed -i 's|/home/batsim/caebat/data|/opt/vibe-data|' \
   /opt/vibe/examples/config/batsim.conf
 
 # Update the path of CGNS_ROOT_DIR and HDF5_ROOT
