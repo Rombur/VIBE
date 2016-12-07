@@ -9,12 +9,15 @@ mkdir vibe-data/physics
 mkdir vibe-data/physics/CharTran
 mkdir vibe-data/physics/Thermal
 mkdir vibe-data/physics/Electrical
+mkdir vibe-data/physics/CharTran/dualfoil
+mkdir vibe-data/physics/CharTran/dualfoil/bin
 mkdir vibe-data/physics/CharTran/ntg
 mkdir vibe-data/physics/CharTran/ntg/bin
 mkdir vibe-data/physics/Thermal/amperes
 mkdir vibe-data/physics/Thermal/amperes/bin
 mkdir vibe-data/physics/Electrical/amperes
 mkdir vibe-data/physics/Electrical/amperes/bin
+cp vibe/components/bin/dualfoil vibe-data/physics/CharTran/dualfoil/bin/dualfoil
 cp amperes/test/testThermalBattery vibe-data/physics/Thermal/amperes/bin/amperes
 cp amperes/test/testNTGModel vibe-data/physics/CharTran/ntg/bin/ntg
 cp amperes/test/testElectricalBattery vibe-data/physics/Electrical/amperes/bin/amperes
