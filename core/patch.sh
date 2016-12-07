@@ -21,6 +21,8 @@ cp vibe/components/bin/dualfoil vibe-data/physics/CharTran/dualfoil/bin/dualfoil
 cp amperes/test/testThermalBattery vibe-data/physics/Thermal/amperes/bin/amperes
 cp amperes/test/testNTGModel vibe-data/physics/CharTran/ntg/bin/ntg
 cp amperes/test/testElectricalBattery vibe-data/physics/Electrical/amperes/bin/amperes
+cp amperes/test/testThermalBattery2 vibe-data/physics/Thermal/amperes/bin/amperes2
+cp amperes/test/testElectricalBattery2 vibe-data/physics/Electrical/amperes/bin/amperes2
 
 sed -i 's|/home/batsim/caebat/install/opt/vibe|/opt/vibe|' \
   /opt/vibe/examples/config/batsim.conf

@@ -149,35 +149,6 @@ RUN cd $AMP_BUILD_DIR && cmake                                  \
 RUN cd $AMP_BUILD_DIR && make -j 8 install
 
 
-###########
-# AMPERES #
-###########
-
-# Copy AMPERES
-COPY amperes $SRCDIR/amperes
-
-# Copy AMPERES-Data
-COPY amperes-data $RELEASEDIR/amperes-data
-
-# Comment SET(AMP_LIBS amp) in amp.cmake
-RUN cd $AMP_INSTALL_DIR && sed -i /AMP_LIBS/s/^/\#/ amp.cmake
-
-# Build AMPERES
-RUN cd $AMPERES_BUILD_DIR && cmake                              \
-  -D AMP_DIRECTORY=${AMP_INSTALL_DIR}                           \
-  -D USE_CANTERA=OFF                                            \
-  -D AMPERES_DATA="${RELEASEDIR}/amperes-data"                  \
-  -D AMPERES_INSTALL_DIR=${AMPERES_INSTALL_DIR}                 \
-  ${AMPERES_SRC_DIR}
-
-RUN cd $AMPERES_BUILD_DIR && make -j 8 install
-
-# Move AMPERES test to INSTALL_DIR
-RUN cp -a $AMPERES_BUILD_DIR/src/test $AMPERES_INSTALL_DIR
-
-# Add AMPERES to LD_LIBRARY_PATH so the tests that have been moved can run
-ENV LD_LIBRARY_PATH="/opt/amperes/lib:$LD_LIBRARY_PATH"
-
 
 ########
 # CGNS #
@@ -241,6 +212,40 @@ COPY vibe $RELEASEDIR/vibe
 RUN cd $VIBE_INSTALL_DIR/components/config && \
   ln -sf makeconfig.batsim makeconfig.local && \
   cd $VIBE_INSTALL_DIR/components && make install
+
+###########
+# AMPERES #
+###########
+
+# Copy AMPERES
+COPY amperes $SRCDIR/amperes
+
+# Copy AMPERES-Data
+COPY amperes-data $RELEASEDIR/amperes-data
+
+# Comment SET(AMP_LIBS amp) in amp.cmake
+RUN cd $AMP_INSTALL_DIR && sed -i /AMP_LIBS/s/^/\#/ amp.cmake
+
+# Build AMPERES
+RUN cd $AMPERES_BUILD_DIR && cmake                              \
+  -D AMP_DIRECTORY=${AMP_INSTALL_DIR}                           \
+  -D USE_CANTERA=OFF                                            \
+  -D VIBE_DIRECTORY:PATH=${VIBE_INSTALL_DIR}                    \
+  -D USE_EXT_VIBE=1                                             \
+  -D AMPERES_DATA="${RELEASEDIR}/amperes-data"                  \
+  -D AMPERES_INSTALL_DIR=${AMPERES_INSTALL_DIR}                 \
+  ${AMPERES_SRC_DIR}
+
+RUN cd $AMPERES_BUILD_DIR && make -j 8 install
+
+# Move AMPERES test to INSTALL_DIR
+RUN cp -a $AMPERES_BUILD_DIR/src/test $AMPERES_INSTALL_DIR
+
+# Add AMPERES to LD_LIBRARY_PATH so the tests that have been moved can run
+ENV LD_LIBRARY_PATH="/opt/amperes/lib:$LD_LIBRARY_PATH"
+
+
+############
 
 # Patch VIBE/OAS
 COPY patch.sh $RELEASEDIR
