@@ -1,0 +1,4 @@
+/opt/OAS/bin/ips.py --simulation=thermal_electrical_chartran_cell_twoway.conf --log=temp.log --platform=/opt/vibe/examples/config/batsim.conf -a > output.txt
+
+
+#NSTEP=2, FINISH=30 in config

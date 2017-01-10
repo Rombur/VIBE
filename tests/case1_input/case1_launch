@@ -1,0 +1,4 @@
+/opt/OAS/bin/ips.py --simulation=thermal_chartran_cell_twoway.conf --log=temp.log --platform=/opt/vibe/examples/config/batsim.conf -a > output.txt
+
+
+#REGULAR time loop in config file with NSTEP=2, FINISH=30

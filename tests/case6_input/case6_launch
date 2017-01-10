@@ -1,0 +1,2 @@
+/opt/OAS/bin/ips.py --simulation=thermal_electrical_chartran_farasis.conf --log=temp.log --platform=/opt/vibe/examples/config/batsim.conf -a > output.txt
+
