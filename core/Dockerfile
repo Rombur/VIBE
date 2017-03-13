@@ -16,7 +16,8 @@ RUN apt-get update && apt-get install -y \
       libxmu-dev \
       subversion \
       doxygen \
-      python-numpy
+      python-numpy \
+      vim
 
 ARG TOPDIR="/scratch"
 ARG SRCDIR="${TOPDIR}/src"
@@ -257,3 +258,27 @@ RUN sh -xe $RELEASEDIR/patch.sh && rm $RELEASEDIR/patch.sh
 
 # Remove unnecessary directory
 RUN rm -rf /scratch /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/AMP-Data /opt/._AMP-Data
+
+# Remove unnecessary example cases
+RUN rm -rf /opt/vibe/examples/case20
+RUN rm -rf /opt/vibe/examples/case200
+RUN rm -rf /opt/vibe/examples/case201
+RUN rm -rf /opt/vibe/examples/case202
+RUN rm -rf /opt/vibe/examples/case7-context
+
+# Remove old clean script in some of the example cases
+RUN rm /opt/vibe/examples/case10/cleanSim
+RUN rm /opt/vibe/examples/case2/cleanSim
+RUN rm /opt/vibe/examples/case6/cleanSim
+RUN rm /opt/vibe/examples/case9/cleanSim
+
+# Add new clean script to each example case
+ADD clean.sh /opt/vibe/examples/case1/
+ADD clean.sh /opt/vibe/examples/case2/
+ADD clean.sh /opt/vibe/examples/case3/
+ADD clean.sh /opt/vibe/examples/case5/
+ADD clean.sh /opt/vibe/examples/case6/
+ADD clean.sh /opt/vibe/examples/case7/
+ADD clean.sh /opt/vibe/examples/case9/
+ADD clean.sh /opt/vibe/examples/case10/
+
