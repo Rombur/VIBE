@@ -51,26 +51,30 @@ RUN mkdir -p $TPL_SRC_DIR $TPL_BUILD_DIR $TPL_INSTALL_DIR $AMPERES_BUILD_DIR $AM
 ############
 
 # Download AMP TPLs
+ENV HYPRE_VERSION=2.11.2
+ENV PETSC_VERSION=3.7.5
+ENV TRILINOS_VERSION=12.10.1
 RUN cd $TPL_SRC_DIR && \
     wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/boost-1.55.0-headers.tar.gz && \
-    wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/hypre-2.11.0.tar.gz && \
+    wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/hypre-${HYPRE_VERSION}.tar.gz && \
     wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/libmesh.tar.gz && \
     wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/sundials-2.6.2.tar.gz && \
-    wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/petsc-3.7.3.tar.gz && \
+    wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/petsc-${PETSC_VERSION}.tar.gz && \
     wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/timerutility.tar.gz && \
     wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/hdf5-1.8.12.tar.gz && \
     wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/silo-4.10.2.tar.gz && \
-    wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/trilinos-12.6.1-Source.tar.gz
+    wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/trilinos-${TRILINOS_VERSION}-Source.tar.gz
 
 # Download DTK and DTKData
-RUN cd $TPL_SRC_DIR && git clone https://github.com/ORNL-CEES/DataTransferKit.git
+RUN cd $TPL_SRC_DIR && git clone https://github.com/ORNL-CEES/DataTransferKit.git && \
+    cd DataTransferKit &&  git checkout dtk-2.0
 RUN cd $TPL_SRC_DIR && git clone https://github.com/ORNL-CEES/DTKData.git
 
 # Extract Trilinos
-RUN cd $TPL_SRC_DIR && tar xf trilinos-12.6.1-Source.tar.gz
+RUN cd $TPL_SRC_DIR && tar xf trilinos-$TRILINOS_VERSION-Source.tar.gz
 
 # Add the symbolic links
-RUN cd $TPL_SRC_DIR/trilinos-12.6.1-Source && ln -s ${TPL_SRC_DIR}/DataTransferKit
+RUN cd $TPL_SRC_DIR/trilinos-$TRILINOS_VERSION-Source && ln -s ${TPL_SRC_DIR}/DataTransferKit
 RUN cd $TPL_SRC_DIR/DataTransferKit && ln -s ${TPL_SRC_DIR}/DTKData
 
 # Download TPL-builder
@@ -109,13 +113,13 @@ RUN cd $TPL_BUILD_DIR && cmake                                  \
       -D ZLIB_LIB_DIR="/usr/lib/x86_64-linux-gnu"               \
     -D HDF5_URL="${TPL_SRC_DIR}/hdf5-1.8.12.tar.gz"             \
     -D SILO_URL="${TPL_SRC_DIR}/silo-4.10.2.tar.gz"             \
-    -D HYPRE_URL="${TPL_SRC_DIR}/hypre-2.11.0.tar.gz"           \
+    -D HYPRE_URL="${TPL_SRC_DIR}/hypre-${HYPRE_VERSION}.tar.gz" \
     -D LIBMESH_URL="${TPL_SRC_DIR}/libmesh.tar.gz"              \
-    -D TRILINOS_SRC_DIR="${TPL_SRC_DIR}/trilinos-12.6.1-Source" \
+    -D TRILINOS_SRC_DIR="${TPL_SRC_DIR}/trilinos-${TRILINOS_VERSION}-Source" \
       -D TRILINOS_EXTRA_FLAGS="$TRILINOS_EXTRA_FLAGS"           \
-      -D TRILINOS_PACKAGES="Epetra;Thyra;ML;Kokkos;Amesos"      \
+      -D TRILINOS_PACKAGES="Epetra;Thyra;ML;Kokkos;Amesos;NOX" \
     -D SUNDIALS_URL="${TPL_SRC_DIR}/sundials-2.6.2.tar.gz"      \
-    -D PETSC_URL="${TPL_SRC_DIR}/petsc-3.7.3.tar.gz"              \
+    -D PETSC_URL="${TPL_SRC_DIR}/petsc-${PETSC_VERSION}.tar.gz" \
     -D TIMER_URL="${TPL_SRC_DIR}/timerutility.tar.gz"           \
       -D TIMER_USE_MATLAB:BOOL=false                            \
   ${TPL_BUILDER}
