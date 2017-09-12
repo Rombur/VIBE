@@ -228,9 +228,6 @@ COPY amperes $SRCDIR/amperes
 # Copy AMPERES-Data
 COPY amperes-data $RELEASEDIR/amperes-data
 
-# Comment SET(AMP_LIBS amp) in amp.cmake
-RUN cd $AMP_INSTALL_DIR && sed -i /AMP_LIBS/s/^/\#/ amp.cmake
-
 # Build AMPERES
 RUN cd $AMPERES_BUILD_DIR && cmake                              \
   -D AMP_DIRECTORY=${AMP_INSTALL_DIR}                           \
@@ -285,4 +282,3 @@ ADD clean.sh /opt/vibe/examples/case6/
 ADD clean.sh /opt/vibe/examples/case7/
 ADD clean.sh /opt/vibe/examples/case9/
 ADD clean.sh /opt/vibe/examples/case10/
-
