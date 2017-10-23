@@ -53,7 +53,7 @@ RUN mkdir -p $TPL_SRC_DIR $TPL_BUILD_DIR $TPL_INSTALL_DIR $AMPERES_BUILD_DIR $AM
 # Download AMP TPLs
 ENV HYPRE_VERSION=2.11.2
 ENV PETSC_VERSION=3.7.5
-ENV TRILINOS_VERSION=12.10.1
+ENV TRILINOS_VERSION=12.12.1
 RUN cd $TPL_SRC_DIR && \
     wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/boost-1.55.0-headers.tar.gz && \
     wget https://bitbucket.org/AdvancedMultiPhysics/tpl-builder/downloads/hypre-${HYPRE_VERSION}.tar.gz && \
