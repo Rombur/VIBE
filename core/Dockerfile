@@ -80,10 +80,6 @@ RUN cd $TPL_SRC_DIR/DataTransferKit && ln -s ${TPL_SRC_DIR}/DTKData
 # Download TPL-builder
 RUN cd $SRCDIR && hg clone https://bitbucket.org/AdvancedMultiPhysics/tpl-builder $TPL_BUILDER
 
-# Patch the TPL-builder
-COPY tpl-builder.patch $TPL_BUILDER/tpl-builder.patch 
-RUN cd $TPL_BUILDER && hg import tpl-builder.patch --no-commit
-
 ENV TRILINOS_EXTRA_FLAGS="-DTrilinos_ENABLE_ALL_PACKAGES=OFF;"
 ENV TRILINOS_EXTRA_FLAGS="-DBUILD_SHARED_LIBS=ON;${TRILINOS_EXTRA_FLAGS}"
 ENV TRILINOS_EXTRA_FLAGS="-DTrilinos_EXTRA_REPOSITORIES=DataTransferKit;${TRILINOS_EXTRA_FLAGS}"
