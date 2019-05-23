@@ -1,6 +1,11 @@
 * The `core` folder contains the Dockerfile used to build an image of 
   [VIBE](http://batterysim.org/vibe).
 * The `remote` folder sets up VIBE to be launched remotely via SSH.
+* The `tests` folder contains the tests for VIBE. They can be run by going in
+  the `tests` folder and using:
+```bash
+$ docker run -v $PWD:/scratch dalg24/vibe /scratch/test.sh
+```
 
 It is however not necessary to build VIBE's image since it can be pulled using:
 ```bash

@@ -1,0 +1,4 @@
+/opt/OAS/bin/ips.py --simulation=thermal_electrical_chartran_battery_twoway.conf --log=temp.log --platform=/opt/vibe/examples/config/batsim.conf -a > output.txt
+
+
+
